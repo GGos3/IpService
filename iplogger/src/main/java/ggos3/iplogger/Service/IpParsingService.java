@@ -10,7 +10,7 @@ import java.util.Map;
 public class IpParsingService implements IpService{
     String xForwardedFor;
     String remoteAddr;
-    String realIP;
+    String ip;
 
     @Override
     public Map<String, String> parsingIp(RequestHeader header) {
@@ -18,15 +18,17 @@ public class IpParsingService implements IpService{
         getHeader(header);
 
         if (xForwardedFor == null || xForwardedFor.length() == 0) {
+            if(remoteAddr.equals("0:0:0:0:0:0:0:1"))
+                remoteAddr = "127.0.0.1";
             ipMap.put("Remote-Address", remoteAddr);
 
             return ipMap;
         }
 
         String[] ipArray = xForwardedFor.split(",");
-        realIP = ipArray[0];
+        ip = ipArray[0];
 
-        ipMap.put("realIP", realIP);
+        ipMap.put("Ip", ip);
         ipMap.put("X-Forwarded-For", xForwardedFor);
 
         return ipMap;
@@ -35,5 +37,4 @@ public class IpParsingService implements IpService{
         this.xForwardedFor = header.getXForwardedFor();
         this.remoteAddr = header.getRemoteAddr();
     }
-
 }
