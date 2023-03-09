@@ -4,12 +4,13 @@ import ggos3.iplogger.RequestHeader;
 import ggos3.iplogger.Service.IpService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RestController
+@Controller
 public class MainController {
     private final IpService ipService;
     @Autowired
@@ -18,12 +19,30 @@ public class MainController {
     }
 
     @RequestMapping("/")
-    public Map<String, String> log(HttpServletRequest req) {
+    public String log(HttpServletRequest req, Model model) {
         RequestHeader header = setRequestHeader(req);
         Map<String, String> ipMap = ipService.parsingIp(header);
 
-        return ipMap;
+        String ip = ipMap.get("Remote-Address");
+        model.addAttribute("ip", ip);
+
+        return "index";
     }
+
+    @RequestMapping(value = "/", headers = "X-Forwarded-For")
+    public String xffLog(HttpServletRequest req, Model model) {
+        RequestHeader header = setRequestHeader(req);
+        Map<String, String> ipMap = ipService.parsingIp(header);
+
+        String ip = ipMap.get("Ip");
+        String xff = ipMap.get("X-Forwarded-For");
+
+        model.addAttribute("IP", ip);
+        model.addAttribute("XFF", xff);
+
+        return "xff";
+    }
+
 
     private static RequestHeader setRequestHeader(HttpServletRequest req) {
         RequestHeader header = new RequestHeader();
