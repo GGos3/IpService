@@ -3,7 +3,7 @@ package ggos3.iplogger.controller;
 import ggos3.iplogger.RequestHeader;
 import ggos3.iplogger.Service.IpService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
     private final IpService ipService;
-    @Autowired
-    public MainController(IpService ipService) {
-        this.ipService = ipService;
-    }
 
     @RequestMapping("/")
     public String log(HttpServletRequest req, Model model) {
