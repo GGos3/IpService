@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -43,6 +45,27 @@ public class MainController {
         return "xff";
     }
 
+    @RequestMapping("/info")
+    public String ipInfo(HttpServletRequest req, Model model) {
+        Map<String, String> headerMap = getHeaderMap(req);
+        model.addAttribute("headerMap", headerMap);
+
+        return "info";
+    }
+
+    /**
+     * headerName, headerValue로 이루어진 Map을 생성해줌
+     */
+    private static Map<String, String> getHeaderMap(HttpServletRequest req) {
+        Map<String, String> headerMap = new HashMap<>();
+        Enumeration<String> headerNames = req.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = req.getHeader(headerName);
+            headerMap.put(headerName, headerValue);
+        }
+        return headerMap;
+    }
 
     private static RequestHeader setRequestHeader(HttpServletRequest req) {
         RequestHeader header = new RequestHeader();
