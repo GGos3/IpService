@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns: th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>내 아이피 정보</title>
+</head>
+<body>
+    <p th:each="item : ${headerMap}">
+        <span th:text="${item.key}"></span>
+        <span th:text="${item.value}"></span>
+    </p>
+
+</body>
+<style>
+    html,
+    body {
+        flex-direction: column;
+        background-color: #222222;
+    }
+
+    span {
+        color: #FFFFFF;
+    }
+
+</style>
+</html>
