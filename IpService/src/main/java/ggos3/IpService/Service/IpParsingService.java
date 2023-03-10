@@ -1,6 +1,7 @@
 package ggos3.IpService.Service;
 
 import ggos3.IpService.RequestHeader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@PropertySource("classpath:ProxyForwarded.properties")
+@PropertySource("classpath:application.yml")
 public class IpParsingService implements IpService{
     String xForwardedFor;
     String remoteAddr;
     String ip;
-    @Value("${Forwarded}")
+    @Value("${config.Forwarded}")
     private String Forwarded;
 
     @Override
@@ -32,6 +33,7 @@ public class IpParsingService implements IpService{
         }
 
         String[] ipArray = xForwardedFor.split(",");
+        System.out.println(Forwarded);
         int i = (ipArray.length) - Forwarded;
         ip = ipArray[i];
 
@@ -41,7 +43,7 @@ public class IpParsingService implements IpService{
         return ipMap;
     }
 
-    // ProxyForwarded.properties
+    // application.yml
     public int getProperty() {
         return Integer.parseInt(Forwarded);
     }
