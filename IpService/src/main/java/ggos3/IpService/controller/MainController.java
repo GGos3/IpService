@@ -1,7 +1,7 @@
-package ggos3.iplogger.controller;
+package ggos3.IpService.controller;
 
-import ggos3.iplogger.RequestHeader;
-import ggos3.iplogger.Service.IpService;
+import ggos3.IpService.RequestHeader;
+import ggos3.IpService.Service.IpService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

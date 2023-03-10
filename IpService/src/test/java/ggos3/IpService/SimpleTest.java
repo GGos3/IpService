@@ -1,8 +1,6 @@
-package ggos3.iplogger;
+package ggos3.IpService;
 
 import org.assertj.core.api.Assertions;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 
 public class SimpleTest {
     public static void main(String[] args) {

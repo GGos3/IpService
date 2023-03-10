@@ -1,4 +1,4 @@
-package ggos3.iplogger;
+package ggos3.IpService;
 
 import lombok.Getter;
 import lombok.Setter;

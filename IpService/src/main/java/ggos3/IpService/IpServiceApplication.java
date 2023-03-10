@@ -1,13 +1,13 @@
-package ggos3.iplogger;
+package ggos3.IpService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IpLoggerApplication {
+public class IpServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(IpLoggerApplication.class, args);
+        SpringApplication.run(IpServiceApplication.class, args);
     }
 
 }

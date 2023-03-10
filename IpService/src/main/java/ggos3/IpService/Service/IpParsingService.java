@@ -1,6 +1,6 @@
-package ggos3.iplogger.Service;
+package ggos3.IpService.Service;
 
-import ggos3.iplogger.RequestHeader;
+import ggos3.IpService.RequestHeader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
