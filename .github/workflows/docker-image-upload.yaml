@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+job:
+  build:
+    runs-os: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to Docker Hub
+        uses: docker/login0action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker build & push
+        uses: docker/build-push-actions@v2
+        with:
+          context: .
+          file: ./IpService/Dockerfile
+          platforms: linux/amd64, linux/arm64/v8
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/ipservice:latest
