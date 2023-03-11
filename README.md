@@ -12,8 +12,8 @@
 # 이미지 빌드
 docker build -t ipservice . 
 # 이미지 실행
-docker run -dp 8080:8080 -e ipservice
+docker run -dp 8080:8080 -e janpll0421/ipservice
 
 # 환경 변수옵션 사용
-docker run -dp 8080:8080 -e Forwarded=1 ipservice
+docker run -dp 8080:8080 -e Forwarded=1 janpll0421/ipservice
 ```
