@@ -33,7 +33,6 @@ public class IpParsingService implements IpService{
         }
 
         String[] ipArray = xForwardedFor.split(",");
-        System.out.println(Forwarded);
         int i = (ipArray.length) - Forwarded;
         ip = ipArray[i];
 
