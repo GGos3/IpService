@@ -27,6 +27,6 @@ jobs:
         with:
           context: .
           file: ./IpService/Dockerfile
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ipservice:latest
