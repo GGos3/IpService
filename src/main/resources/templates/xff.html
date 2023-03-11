@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns: th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>내 아이피 확인</title>
+</head>
+<body>
+<img src="/image/eye.png"/>
+<h3 class="sub-text">내 공인 아이피는?</h3>
+<h1 class="text" th:text="${IP}">엥? 님 어캐함</h1>
+<h1 class="text" th:text="'XFF :' + ${XFF}">엥? 님 어캐함</h1>
+<div>
+  <a onclick="copy()" title="복사" class="button btnBorder btnBlueGreen">복사</a>
+  <a href="/info" title="자세히" style="text-decoration: none" class="button btnBorder btnBlueGreen">자세히</a>
+</div>
+
+</body>
+<style>
+  html,
+  body {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #222222;
+  }
+
+
+  .text {
+    color: #cccccc;
+    line-height: 0;
+    font-size: 3rem;
+  }
+
+  .sub-text {
+    color: #cccccc;
+  }
+
+  a.button {
+    display: block;
+    position: relative;
+    float: left;
+    width: 120px;
+    padding: 0;
+    margin: 10px 5px 20px 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+    border-radius: 5px;
+    transition: all 0.2s ;
+    text-decoration: none;
+  }
+
+  .btnBlueGreen {
+    background: #00AE68;
+  }
+
+  .btnBlueGreen.btnBorder {
+    box-shadow: 0px 0px 0px 0px #21825B;
+  }
+
+  .btnBlueGreen.btnBorder:hover {
+    box-shadow: 0px 0px 0px 5px #21825B;
+  }
+
+  .toast {
+    position: absolute;
+    top: 80%;
+    width: 20%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3%;
+    font-size: 2rem;
+    color: #cccccc;
+    background-color: #444444;
+    opacity: 0.8;
+  }
+
+
+</style>
+
+<script>
+  /// we
+  function copy() {
+    const ip = document.querySelector('h1').innerText;
+    navigator.clipboard.writeText(ip);
+  }
+
+  // 복사시 toast 메시지 띄우기
+  const copyBtn = document.querySelector('.btnBlueGreen');
+  copyBtn.addEventListener('click', () => {
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.innerText = 'Copied!';
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 2000);
+  });
+</script>
+</html>
