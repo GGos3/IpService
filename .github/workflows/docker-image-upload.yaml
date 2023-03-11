@@ -29,4 +29,4 @@ jobs:
           file: ./IpService/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ipservice:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ipservice:latest
