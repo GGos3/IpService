@@ -32,12 +32,12 @@ public class MainController {
     public String xffLog(HttpServletRequest req, Model model) {
         RequestHeader header = setRequestHeader(req);
         Map<String, String> ipMap = ipService.parsingIp(header);
-        String cfip = req.getHeader("CF-Connecting-IP");
+        String cloudFlareIP = req.getHeader("CF-Connecting-IP");
 
         String ip = ipMap.get("Ip");
         String xff = ipMap.get("X-Forwarded-For");
-        if (cfip != null) {
-            ip = cfip;
+        if (cloudFlareIP != null) {
+            ip = cloudFlareIP;
         }
 
         model.addAttribute("IP", ip);
