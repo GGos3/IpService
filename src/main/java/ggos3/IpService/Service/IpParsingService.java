@@ -1,7 +1,6 @@
 package ggos3.IpService.Service;
 
 import ggos3.IpService.RequestHeader;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class IpParsingService implements IpService{
     public Map<String, String> parsingIp(RequestHeader header) {
         Map<String, String> ipMap = new HashMap<>();
         getHeader(header);
-        int Forwarded = getProperty();
+        int ProxyCount = getProperty();
 
         if (xForwardedFor == null || xForwardedFor.length() == 0) {
             if(remoteAddr.equals("0:0:0:0:0:0:0:1"))
@@ -32,8 +31,9 @@ public class IpParsingService implements IpService{
             return ipMap;
         }
 
+
         String[] ipArray = xForwardedFor.split(",");
-        int i = (ipArray.length) - Forwarded;
+        int i = (ipArray.length) - ProxyCount;
         ip = ipArray[i];
 
         ipMap.put("Ip", ip);
@@ -44,6 +44,12 @@ public class IpParsingService implements IpService{
 
     // application.yml
     public int getProperty() {
+        try {
+            Integer.parseInt(Forwarded);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+
         return Integer.parseInt(Forwarded);
     }
 
