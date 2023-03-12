@@ -20,30 +20,20 @@ public class MainController {
     @RequestMapping("/")
     public String log(HttpServletRequest req, Model model) {
         RequestHeader header = setRequestHeader(req);
-        Map<String, String> ipMap = ipService.parsingIp(header);
+        String ip = ipService.parsingIp(header);
 
-        String ip = ipMap.get("Remote-Address");
         model.addAttribute("ip", ip);
 
         return "index";
     }
 
-    @RequestMapping(value = "/", headers = "X-Forwarded-For")
+    @RequestMapping(value = "/", headers = "CF-Connecting-IP")
     public String xffLog(HttpServletRequest req, Model model) {
-        RequestHeader header = setRequestHeader(req);
-        Map<String, String> ipMap = ipService.parsingIp(header);
         String cloudFlareIP = req.getHeader("CF-Connecting-IP");
 
-        String ip = ipMap.get("Ip");
-        String xff = ipMap.get("X-Forwarded-For");
-        if (cloudFlareIP != null) {
-            ip = cloudFlareIP;
-        }
+        model.addAttribute("ip", cloudFlareIP);
 
-        model.addAttribute("IP", ip);
-        model.addAttribute("XFF", xff);
-
-        return "xff";
+        return "index";
     }
 
 
