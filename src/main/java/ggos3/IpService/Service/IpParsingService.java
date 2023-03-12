@@ -17,32 +17,42 @@ public class IpParsingService implements IpService{
     @Value("${config.Forwarded}")
     private String Forwarded;
 
+    /**
+     * 헤더값을 받아 실제 ip를 추출해 준다.
+     *
+     * @param header Remote-Address, X-Forwarded-For
+     * @return ip
+     */
+
     @Override
-    public Map<String, String> parsingIp(RequestHeader header) {
-        Map<String, String> ipMap = new HashMap<>();
+    public String parsingIp(RequestHeader header) {
         getHeader(header);
         int ProxyCount = getProperty();
 
+        /*
+        XFF 헤더가 비어있을때 remoteAddr를 반환하고,
+        만약 remoteAddr이 ipv6 형태의 localhost라면 ipv4 형태로 변환해준다
+        */
         if (xForwardedFor == null || xForwardedFor.length() == 0) {
             if(remoteAddr.equals("0:0:0:0:0:0:0:1"))
                 remoteAddr = "127.0.0.1";
-            ipMap.put("Remote-Address", remoteAddr);
 
-            return ipMap;
+            return remoteAddr;
         }
-
 
         String[] ipArray = xForwardedFor.split(",");
         int i = (ipArray.length) - ProxyCount;
-        ip = ipArray[i];
 
-        ipMap.put("Ip", ip);
-        ipMap.put("X-Forwarded-For", xForwardedFor);
+        try {
+            ip = ipArray[i];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ip = ipArray[i - 1];
+        }
 
-        return ipMap;
+        return ip;
     }
 
-    // application.yml
+    // application.yml 에서 환경변수를 불러온다.
     public int getProperty() {
         try {
             Integer.parseInt(Forwarded);
