@@ -10,7 +10,7 @@ X-Forwarded-For 헤더를 임의로 조작해도 진짜 ip를 보여줌
 
 ### Docker 🐳
 ```dockerfile
-# 이미지 빌드
+# 이미지 풀
 docker pull janpll0421/ipservice
 
 # 이미지 실행
